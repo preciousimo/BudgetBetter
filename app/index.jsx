@@ -1,18 +1,50 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, Button } from 'react-native'
+import React, { useEffect } from 'react'
+import services from '../utils/services'
+import { client } from '../utils/KindeConfig';
+import { Link, useRouter } from 'expo-router'
 
 export default function Home() {
-  return (
-    <View style={{
-        marginTop:20
-    }}>
-      <Text style={styles.text}>Welcome to Budget Better</Text>
-    </View>
-  )
+    const router=useRouter();
+    useEffect(() => {
+        checkUserAUth();
+    }, [])
+    const checkUserAUth = async () => {
+        try {
+            const result = await services.getData('login');
+            console.log('Login status:', result);
+            if (result !== 'true') {
+                router.replace('/login');
+            }
+        } catch (error) {
+            console.error('Error checking user authentication:', error);
+            alert(JSON.stringify(error))
+        }
+    };
+
+    const handleLogout = async () => {
+        const loggedOut = await client.logout();
+        if (loggedOut) {
+            await services.getData('login','false');
+            router.replace('/login');
+        }
+    };
+    
+    return (
+        <View style={{
+            marginTop: 20
+        }}>
+            <Text style={styles.text}>Welcome to Budget Better</Text>
+            <Button
+            title='Logout'
+            onPress={handleLogout}
+            />
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
-    text:{
-        fontSize:35
+    text: {
+        fontSize: 35
     }
 })
