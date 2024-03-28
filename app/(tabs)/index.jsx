@@ -3,11 +3,13 @@ import React, { useEffect } from 'react'
 import services from '../../utils/services'
 import { client } from '../../utils/KindeConfig';
 import { Link, useRouter } from 'expo-router'
+import { supabase } from '../../utils/SupabaaseConfig';
 
 export default function Home() {
     const router=useRouter();
     useEffect(() => {
         checkUserAUth();
+        getCategoryList();
     }, [])
     const checkUserAUth = async () => {
         try {
@@ -29,6 +31,16 @@ export default function Home() {
             router.replace('/login');
         }
     };
+
+    const getCategoryList = async () => {
+        const user=await client.getUserDetails();
+        const {data, error} = await supabase
+        .from('Category')
+        .select('*')
+        .eq('created_by',user.email);
+
+        console.log("Data",data)
+    }
     
     return (
         <View style={{
