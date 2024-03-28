@@ -49,7 +49,7 @@ export default function LoginScreen() {
                     color: Colors.WHITE,
                     marginTop: 20,
                 }}>
-                    Stay on Track, Event by Event: Your Personal Budget Planner App!
+                    Precious Stay on Track, Event by Event: My Personal Budget Planner App!
                 </Text>
 
                 <TouchableOpacity style={styles.button}

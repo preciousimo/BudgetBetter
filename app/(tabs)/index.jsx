@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Button } from 'react-native'
 import React, { useEffect } from 'react'
-import services from '../utils/services'
-import { client } from '../utils/KindeConfig';
+import services from '../../utils/services'
+import { client } from '../../utils/KindeConfig';
 import { Link, useRouter } from 'expo-router'
 
 export default function Home() {
